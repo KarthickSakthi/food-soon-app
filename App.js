@@ -1,5 +1,5 @@
 /**
- * HMR - Hot Module Reloading
+ * HMR - Hot Module Replacement
  * File Watcher Algorithm - c++
  * Building
  * Minification
