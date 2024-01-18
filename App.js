@@ -14,6 +14,7 @@
  * Manage the port number
  * Consistent hashing algorithms
  * Zero config bundler
+ * Tree shaking - Removing unwanted code
  * 
  * Transitive dependency
 */
