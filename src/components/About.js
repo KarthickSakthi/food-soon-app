@@ -2,7 +2,7 @@ import { Component } from 'react';
 // import User from './User';
 import UserClass from './UserClass';
 
-class About extends Component {
+export class About extends Component {
   constructor(props) {
     super(props);
     // console.log('Parent Constructor');

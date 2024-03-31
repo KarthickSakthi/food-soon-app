@@ -32,8 +32,8 @@ const Body = () => {
     // console.log(json);
     // * optional chaining
     // setListOfRestaurants(json.data.cards[2].data.data.cards);
-    setListOfRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-    setFilteredRestaurant(json?.data?.cards[2]?.data?.data?.cards);
+    setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setFilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   };
 
   const onlineStatus = useOnlineStatus();
@@ -45,7 +45,7 @@ const Body = () => {
       </h1>
     );
 
-  return listOfRestaurants.length === 0 ? (
+  return listOfRestaurants?.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
@@ -98,14 +98,14 @@ const Body = () => {
       <div className="res-container">
         {/* // * looping through the <RestaurentCard /> components Using Array.map() method */}
 
-        {filteredRestaurant.map((restaurant) => (
+        {filteredRestaurant?.map((restaurant) => (
           <Link
             style={{
               textDecoration: 'none',
               color: '#000',
             }}
-            key={restaurant.data.id}
-            to={'/restaurants/' + restaurant.data.id}
+            key={restaurant.info.id}
+            to={'/restaurants/' + restaurant.info.id}
           >
             <RestaurantCard resData={restaurant} />
           </Link>
