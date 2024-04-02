@@ -32,8 +32,8 @@ const Body = () => {
     // console.log(json);
     // * optional chaining
     // setListOfRestaurants(json.data.cards[2].data.data.cards);
-    setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setFilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setListOfRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+    setFilteredRestaurant(json?.data?.cards[2]?.data?.data?.cards);
   };
 
   const onlineStatus = useOnlineStatus();
@@ -45,7 +45,7 @@ const Body = () => {
       </h1>
     );
 
-  return listOfRestaurants?.length === 0 ? (
+  return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
@@ -53,18 +53,19 @@ const Body = () => {
         <input type="text" placeholder="Search Food or Restaurant" />
         <button>Search</button>
       </div> */}
-      <div className="filter">
-        <div className="search">
+      <div className="filter flex">
+        <div className="search m-4 p-4">
           <input
             type="text"
             placeholder="Search a restaurant you want..."
-            className="searchBox"
+            className="searchBox border border-solid border-black"
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
           />
           <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
               // * Filter the restaurant cards and update the UI
               // * searchText
@@ -80,32 +81,34 @@ const Body = () => {
             Search
           </button>
         </div>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            // * Filter logic
-            const filteredList = listOfRestaurants.filter(
-              (res) => parseFloat(res.data.avgRating) > 4
-            );
+        <div className="search m-4 p-4 flex items-center">
+          <button
+            className="px-4 py-2 bg-gray-100 m-4 rounded-lg"
+            onClick={() => {
+              // * Filter logic
+              const filteredList = listOfRestaurants.filter(
+                (res) => parseFloat(res.data.avgRating) > 4
+              );
 
-            setFilteredRestaurant(filteredList);
-            console.log(filteredList);
-          }}
-        >
-          Top Rated Restaurants
-        </button>
+              setFilteredRestaurant(filteredList);
+              console.log(filteredList);
+            }}
+          >
+            Top Rated Restaurants
+          </button>
+        </div>
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap">
         {/* // * looping through the <RestaurentCard /> components Using Array.map() method */}
 
-        {filteredRestaurant?.map((restaurant) => (
+        {filteredRestaurant.map((restaurant) => (
           <Link
             style={{
               textDecoration: 'none',
               color: '#000',
             }}
-            key={restaurant.info.id}
-            to={'/restaurants/' + restaurant.info.id}
+            key={restaurant.data.id}
+            to={'/restaurants/' + restaurant.data.id}
           >
             <RestaurantCard resData={restaurant} />
           </Link>
