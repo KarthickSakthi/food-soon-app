@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
-import RestaurantCard from './RestaurantCard';
+import { useEffect, useState, useContext } from 'react';
+import RestaurantCard, { withPromotedLabel } from './RestaurantCard';
 import Shimmer from './Shimmer';
 import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utils/useOnlineStatus';
+import UserContext from '../utils/UserContext';
 
 const Body = () => {
   // * React Hook -> A normal JavaScript function which is given to us by React (or) Normal JS utility functions
@@ -15,8 +16,10 @@ const Body = () => {
 
   const [searchText, setSearchText] = useState('');
 
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+
   // * Whenever a state variable updates or changes, react triggers a reconciliation cycle(re-renders the component)
-  // console.log('Body rendered');
+  console.log('Body Rendered', listOfRestaurants);
 
   useEffect(() => {
     fetchData();
@@ -32,8 +35,8 @@ const Body = () => {
     // console.log(json);
     // * optional chaining
     // setListOfRestaurants(json.data.cards[2].data.data.cards);
-    setListOfRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-    setFilteredRestaurant(json?.data?.cards[2]?.data?.data?.cards);
+    setListOfRestaurants(json?.data?.cards[1].card.card.gridElements.infoWithStyle.restaurants);
+    setFilteredRestaurant(json?.data?.cards[1].card.card.gridElements.infoWithStyle.restaurants);
   };
 
   const onlineStatus = useOnlineStatus();
@@ -45,7 +48,9 @@ const Body = () => {
       </h1>
     );
 
-  return listOfRestaurants.length === 0 ? (
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
+  return listOfRestaurants?.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
@@ -71,8 +76,8 @@ const Body = () => {
               // * searchText
               console.log(searchText);
 
-              const filteredRestaurant = listOfRestaurants.filter((res) =>
-                res.data.name.toLowerCase().includes(searchText.toLowerCase())
+              const filteredRestaurant = listOfRestaurants?.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
 
               setFilteredRestaurant(filteredRestaurant);
@@ -97,20 +102,33 @@ const Body = () => {
             Top Rated Restaurants
           </button>
         </div>
+        <div className="search m-4 p-4 flex items-center">
+          <label htmlFor="name">User Name: </label>
+          <input
+            id="name"
+            className="border border-black p-2"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex justify-center flex-wrap">
         {/* // * looping through the <RestaurentCard /> components Using Array.map() method */}
 
-        {filteredRestaurant.map((restaurant) => (
+        {filteredRestaurant?.map((restaurant) => (
           <Link
             style={{
               textDecoration: 'none',
               color: '#000',
             }}
-            key={restaurant.data.id}
-            to={'/restaurants/' + restaurant.data.id}
+            key={restaurant.info.id}
+            to={'/restaurants/' + restaurant.info.id}
           >
-            <RestaurantCard resData={restaurant} />
+            {restaurant.info.promoted ? (
+              <RestaurantCardPromoted resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))}
       </div>

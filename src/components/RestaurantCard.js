@@ -1,9 +1,12 @@
 import { CDN_URL } from '../utils/constants';
 import { FiClock } from 'react-icons/fi';
 import { AiOutlineStar } from 'react-icons/ai';
+import { useContext } from 'react';
+import UserContext from '../utils/UserContext';
 
 const RestaurantCard = (props) => {
   const { resData } = props;
+  const { loggedInUser } = useContext(UserContext);
 
   const {
     cloudinaryImageId,
@@ -11,8 +14,8 @@ const RestaurantCard = (props) => {
     cuisines,
     avgRating,
     costForTwo,
-    deliveryTime,
-  } = resData?.data;
+    sla,
+  } = resData?.info;
 
   return (
     <div className="m-4 p-4 w-[250px] bg-gray-100 rounded-lg hover:bg-gray-200 transition-all ">
@@ -35,18 +38,36 @@ const RestaurantCard = (props) => {
           <span>{avgRating} stars</span>
         </h4>
         <h4 className="item-price">
-          <span style={{ marginLeft: '4px' }}>₹</span>{' '}
-          <span>{costForTwo / 100} FOR TWO</span>
+          
+          <span>{costForTwo}</span>
         </h4>
         <h4 className="time">
           <span className="icons">
             <FiClock />
           </span>
-          <span> {deliveryTime} minutes</span>
+          <span>{sla.deliveryTime} minutes</span>
         </h4>
+        <h4>User: {loggedInUser}</h4>
       </div>
     </div>
   );
+};
+
+// * Higher Order Component
+
+// * input - RestaurantCard => RestaurantCardPromoted
+
+export const withPromotedLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black text-white m-2 p-2 rounded-lg">
+          Promoted
+        </label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
 };
 
 export default RestaurantCard;

@@ -20,7 +20,7 @@ class UserClass extends React.Component {
     // console.log(this.props.name + 'Child Component Did Mount');
     // * API call
     const data = await fetch(
-      'https://api.github.com/users/Sreenivasulu-Kalluru'
+      'https://api.github.com/users/KarthickSakthi'
     );
     const json = await data.json();
 
@@ -28,15 +28,15 @@ class UserClass extends React.Component {
       userInfo: json,
     });
 
-    console.log(json);
+    // console.log(json);
   }
 
   componentDidUpdate() {
-    console.log('Component Did Update');
+    // console.log('Component Did Update');
   }
 
   componentWillUnmount() {
-    console.log('Component Will Unmount');
+    // console.log('Component Will Unmount');
   }
 
   render() {
@@ -71,7 +71,7 @@ class UserClass extends React.Component {
         <h2>Name: {name}</h2>
         {/* <h3>Location: {this.props.location}</h3> */}
         <h3>Location: {location}</h3>
-        <h4>Contact: @vaasuk24</h4>
+        <h4>Contact: karthick</h4>
       </div>
     );
   }
