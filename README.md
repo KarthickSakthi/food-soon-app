@@ -5,3 +5,8 @@
 - Slice (cartSlice)
 - dispatch(action)
 - Selector
+
+# Types of Testing (developer)
+- Unit Testing
+- Integration testing
+- End to end testig
