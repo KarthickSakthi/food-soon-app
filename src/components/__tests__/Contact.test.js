@@ -2,13 +2,13 @@ import  { render,screen } from "@testing-library/react"
 
 import Contact from "../Contact";
 
-import {expect} from "@testing-library/jest-dom";
+import  "@testing-library/jest-dom";
 // const { default: Contact } = require("../Contact")
 
 describe("Contact us page Test cases",()=>{
 
 // it is an alias of test
-it("Should load Contact us component",()=>{
+test("Should load Contact us component",()=>{
    render(<Contact/>);
    const heading =  screen.getByRole("heading");
    //Assertion
