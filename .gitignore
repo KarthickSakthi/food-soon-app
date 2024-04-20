@@ -3,3 +3,5 @@ node_modules
 #parcel files
 .parcel-cache
 dist
+
+coverage
