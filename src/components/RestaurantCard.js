@@ -4,6 +4,7 @@ import { AiOutlineStar } from 'react-icons/ai';
 import { useContext } from 'react';
 import UserContext from '../utils/UserContext';
 
+
 const RestaurantCard = (props) => {
   const { resData } = props;
   const { loggedInUser } = useContext(UserContext);
