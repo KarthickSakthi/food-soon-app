@@ -19,7 +19,7 @@ const Body = () => {
   const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   // * Whenever a state variable updates or changes, react triggers a reconciliation cycle(re-renders the component)
-  console.log('Body Rendered', listOfRestaurants);
+  // console.log('Body Rendered', listOfRestaurants);
 
   useEffect(() => {
     fetchData();
@@ -62,6 +62,7 @@ const Body = () => {
         <div className="search m-4 p-4">
           <input
             type="text"
+            data-testid ="searchInput"
             placeholder="Search a restaurant you want..."
             className="searchBox border border-solid border-black"
             value={searchText}
@@ -74,13 +75,14 @@ const Body = () => {
             onClick={() => {
               // * Filter the restaurant cards and update the UI
               // * searchText
-              console.log(searchText);
+              // console.log(searchText);
 
               const filteredRestaurant = listOfRestaurants?.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
 
               setFilteredRestaurant(filteredRestaurant);
+            
             }}
           >
             Search
@@ -92,11 +94,11 @@ const Body = () => {
             onClick={() => {
               // * Filter logic
               const filteredList = listOfRestaurants.filter(
-                (res) => parseFloat(res.data.avgRating) > 4
+                (res) => parseFloat(res.info.avgRating) > 4
               );
 
               setFilteredRestaurant(filteredList);
-              console.log(filteredList);
+              // console.log(filteredList);
             }}
           >
             Top Rated Restaurants
